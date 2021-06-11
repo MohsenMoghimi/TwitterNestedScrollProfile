@@ -49,8 +49,14 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
         
         let topPadding = window.safeAreaInsets.top
         let bottomPadding = window.safeAreaInsets.bottom
-        let statusBarHeight = 0// UIApplication.shared.statusBarFrame.height
-        return window.bounds.height - (topPadding + bottomPadding + CGFloat(statusBarHeight) + headerViewOffsetHeight)
+        
+        var offsets = topPadding + bottomPadding + headerViewOffsetHeight
+        if navigationController != nil {
+            let statusBarHeight = UIApplication.shared.statusBarFrame.height
+            offsets += statusBarHeight
+        }
+        
+        return window.bounds.height - offsets
     }
     
     private func addPagerViewController() {
