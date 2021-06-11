@@ -47,7 +47,7 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
             return 0.0
         }
         
-        return layout.height - (headerViewOffsetHeight + 64) // 64 is navigation and status view height
+        return layout.height - headerViewOffsetHeight
     }
     
     private func addPagerViewController() {
