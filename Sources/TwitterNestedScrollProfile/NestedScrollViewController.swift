@@ -43,7 +43,11 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
     }
     
     private var pagerHeight: CGFloat {
-        self.view.safeAreaLayoutGuide.layoutFrame.height - (headerViewOffsetHeight + 64) // 64 is navigation and status view height
+        guard let layout = UIApplication.shared.keyWindow?.safeAreaLayoutGuide.layoutFrame else {
+            return 0.0
+        }
+        
+        return layout.height - (headerViewOffsetHeight + 64) // 64 is navigation and status view height
     }
     
     private func addPagerViewController() {
