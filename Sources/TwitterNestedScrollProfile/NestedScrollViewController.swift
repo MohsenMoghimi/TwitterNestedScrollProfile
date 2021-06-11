@@ -43,7 +43,7 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
     }
     
     private var pagerHeight: CGFloat {
-        guard let window = UIApplication.shared.keyWindow else {
+        guard let window = UIApplication.shared.windows.first else {
             return 0.0
         }
         
