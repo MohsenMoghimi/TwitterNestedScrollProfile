@@ -7,7 +7,7 @@
 
 import UIKit
 
-public class NestedScrollViewController: UIViewController, ScrollViewDelegate {
+open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
     private lazy var scrollView = ScrollView(delegate: self)
     public var headerViewController: UIViewController!
     public var headerViewHeight: CGFloat = 200
