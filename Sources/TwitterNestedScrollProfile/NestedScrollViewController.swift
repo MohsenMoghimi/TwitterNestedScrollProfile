@@ -49,7 +49,7 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
         
         let topPadding = window.safeAreaInsets.top
         let bottomPadding = window.safeAreaInsets.bottom
-        let statusBarHeight = UIApplication.shared.statusBarFrame.height
+        let statusBarHeight = 0// UIApplication.shared.statusBarFrame.height
         return window.bounds.height - (topPadding + bottomPadding + statusBarHeight + headerViewOffsetHeight)
     }
     
