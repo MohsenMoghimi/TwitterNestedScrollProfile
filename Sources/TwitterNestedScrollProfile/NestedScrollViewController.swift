@@ -9,13 +9,13 @@ import UIKit
 
 public class NestedScrollViewController: UIViewController, ScrollViewDelegate {
     private lazy var scrollView = ScrollView(delegate: self)
-    var headerViewController: UIViewController!
-    var headerViewHeight: CGFloat = 200
-    var headerViewOffsetHeight: CGFloat = 50
+    public var headerViewController: UIViewController!
+    public var headerViewHeight: CGFloat = 200
+    public var headerViewOffsetHeight: CGFloat = 50
     
     private var pagerViewController = PageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     
-    func setViewControllers(_ viewControllers: [UIViewController]) {
+    public func setViewControllers(_ viewControllers: [UIViewController]) {
         pagerViewController.orderedViewControllers = viewControllers
         viewControllers.forEach { (vc) in
             var observeView = vc.view
