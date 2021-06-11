@@ -65,7 +65,7 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
         scrollView.trailingAnchor.constraint(equalTo: guide.trailingAnchor).isActive = true
     }
     
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         addHeaderViewController()
         addPagerViewController()
