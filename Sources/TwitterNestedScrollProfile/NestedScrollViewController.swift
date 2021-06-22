@@ -12,7 +12,14 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
     public var headerViewController: UIViewController!
     public var headerViewHeight: CGFloat = 200
     public var headerViewOffsetHeight: CGFloat = 50
-    public var delegate : NestedScrollViewControllerDelegate?
+    public var delegate : NestedScrollViewControllerDelegate? {
+        didSet {
+            var scrollViews = delegate?.scrollViewsForNestedScroll()
+            scrollViews.forEach { (scroll) in
+                scrollView.addObserverFor(scroll)
+            }
+        }
+    }
     private var pagerViewController = PageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     
     public func setViewControllers(_ viewControllers: [UIViewController]) {
@@ -73,10 +80,6 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
     public override func loadView() {
         super.loadView()
         view.addSubview(scrollView)
-        var scrollViews = delegate?.scrollViewsForNestedScroll()
-        scrollViews.forEach { (scroll) in
-            scrollView.addObserverFor(scroll)
-        }
         let guide = self.view.safeAreaLayoutGuide
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.topAnchor.constraint(equalTo: guide.topAnchor).isActive = true
