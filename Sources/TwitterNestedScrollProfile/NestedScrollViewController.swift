@@ -87,6 +87,6 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
     }
 }
 
-protocol NestedScrollViewControllerDelegate {
+public protocol NestedScrollViewControllerDelegate {
     var observedScrollView : UIScrollView { get set }
 }
