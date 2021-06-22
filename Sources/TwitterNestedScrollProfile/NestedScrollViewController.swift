@@ -12,7 +12,14 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
     public var headerViewController: UIViewController!
     public var headerViewHeight: CGFloat = 200
     public var headerViewOffsetHeight: CGFloat = 50
-    public var delegate : NestedScrollViewControllerDelegate?
+    public var delegate : NestedScrollViewControllerDelegate? {
+        didSet {
+            var scrollViews = delegate.scrollViewsForNestedScroll()
+            scrollViews.forEach { (scroll) in
+                scrollView.addObserverFor(scroll)
+            }
+        }
+    }
     private var pagerViewController = PageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     
     public func setViewControllers(_ viewControllers: [UIViewController]) {
@@ -27,12 +34,12 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
 //            if let tableViewController = vc as? UITableViewController {
 //                observeView = tableViewController.tableView
 //            }
-            if let delegate = self.delegate {
-                var scrollViews = delegate.scrollViewsForNestedScroll()
-                scrollViews.forEach { (scroll) in
-                    scrollView.addObserverFor(scroll)
-                }
-            }
+//            if let delegate = self.delegate {
+//                var scrollViews = delegate.scrollViewsForNestedScroll()
+//                scrollViews.forEach { (scroll) in
+//                    scrollView.addObserverFor(scroll)
+//                }
+//            }
             
         }
     }
