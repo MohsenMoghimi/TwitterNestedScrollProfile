@@ -28,7 +28,8 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
 //                observeView = tableViewController.tableView
 //            }
             if let delegate = self.delegate {
-                delegate.observedScrollViews.forEach { (scroll) in
+                var scrollViews = delegate.scrollViewsForNestedScroll()
+                scrollViews.forEach { (scroll) in
                     scrollView.addObserverFor(scroll)
                 }
             }
@@ -88,5 +89,5 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
 }
 
 public protocol NestedScrollViewControllerDelegate {
-    var observedScrollViews : [UIScrollView] { get set }
+    func scrollViewsForNestedScroll() -> [UIScrollView]
 }
