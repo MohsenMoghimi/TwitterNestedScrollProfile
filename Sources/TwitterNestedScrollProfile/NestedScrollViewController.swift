@@ -23,7 +23,7 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
     private var pagerViewController = PageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     
     public func setViewControllers(_ viewControllers: [UIViewController]) {
-        pagerViewController.orderedViewControllers = viewControllers
+        pagerViewController?.orderedViewControllers = viewControllers
         viewControllers.forEach { (vc) in
             var observeView = vc.view
             
