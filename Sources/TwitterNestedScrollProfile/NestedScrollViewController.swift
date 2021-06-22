@@ -28,11 +28,8 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
 //                observeView = tableViewController.tableView
 //            }
             if let delegate = self.delegate {
-                observeView = delegate.observedScrollViews
                 delegate.observedScrollViews.forEach { (scroll) in
-                    if let observer = observeView {
-                        scrollView.addObserverFor(scroll)
-                    }
+                    scrollView.addObserverFor(scroll)
                 }
             }
             
