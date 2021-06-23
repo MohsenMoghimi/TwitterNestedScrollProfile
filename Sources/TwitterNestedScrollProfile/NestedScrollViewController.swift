@@ -109,8 +109,8 @@ extension UIPageViewController {
         } else {
             direction = .reverse
         }
-        if vcList.indices.contains(page) {
-            self.setViewControllers([self.vcList[page]], direction: self.pageDirection(from: page), animated: animated, completion: nil)
+        if viewControllers.indices.contains(page) {
+            self.setViewControllers([viewControllers[page]], direction: direction, animated: animated, completion: nil)
         }
     }
 }
