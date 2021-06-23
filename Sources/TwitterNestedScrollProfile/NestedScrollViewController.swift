@@ -88,7 +88,7 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
     }
     
     @objc private func changePage(_ sender: UISegmentedControl) {
-        pagerViewController.setPage(currentPage: currentPage, to: sender.selectedSegmentIndex)
+        pagerViewController.setPage(currentPage: currentPage, toPage: sender.selectedSegmentIndex)
         currentPage = sender.selectedSegmentIndex
     }
 }
@@ -99,9 +99,10 @@ public protocol NestedScrollViewControllerDelegate {
 }
 
 extension UIPageViewController {
-    func setPage(currentPage: Int, _ to page: Int, animated: Bool = false) {
+    func setPage(currentPage: Int, _ toPage: Int, animated: Bool = false) {
         var direction : UIPageViewController.NavigationDirection!
-        guard currentPage != page else {
+        guard currentPage != page,
+              let vcList = viewControllers else {
             return
         }
         if currentPage < page {
@@ -109,8 +110,8 @@ extension UIPageViewController {
         } else {
             direction = .reverse
         }
-        if viewControllers.indices.contains(page) {
-            self.setViewControllers([viewControllers[page]], direction: direction, animated: animated, completion: nil)
+        if vcList.indices.contains(page) {
+            self.setViewControllers([vcList[page]], direction: direction, animated: animated, completion: nil)
         }
     }
 }
