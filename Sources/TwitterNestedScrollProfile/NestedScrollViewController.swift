@@ -14,7 +14,7 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
     public var headerViewOffsetHeight: CGFloat = 50
     public var delegate : NestedScrollViewControllerDelegate? {
         didSet {
-            addObserverForScrollViews()
+            addObserverForViews()
         }
     }
     public var segmentController: UISegmentedControl!
@@ -72,16 +72,15 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
     open override func viewDidLoad() {
         super.viewDidLoad()
         addHeaderViewController()
-        addPagerViewController()
-        segmentController = delegate?.viewForSegmentController()
-        segmentController.addTarget(self, action: #selector(changePage(_:)), for: .valueChanged)
-    }
+        addPagerViewController()    }
     
-    private func addObserverForScrollViews() {
+    private func addObserverForViews() {
         guard let scrollViews = delegate?.scrollViewsForNestedScroll() else {return}
         scrollViews.forEach { (scroll) in
             scrollView.addObserverFor(scroll)
         }
+        segmentController = delegate?.viewForSegmentController()
+        segmentController.addTarget(self, action: #selector(changePage(_:)), for: .valueChanged)
     }
     
     @objc private func changePage(_ sender: UISegmentedControl) {
