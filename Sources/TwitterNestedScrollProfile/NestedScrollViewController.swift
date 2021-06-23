@@ -75,12 +75,12 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
         addPagerViewController()    }
     
     private func addObserverForViews() {
-        guard let scrollViews = delegate?.scrollViewsForNestedScroll() else {return}
+        guard let scrollViews = delegate?.scrollViewsForNestedScroll(),
+              let segController = delegate?.viewForSegmentController() else {return}
         scrollViews.forEach { (scroll) in
             scrollView.addObserverFor(scroll)
         }
-        segmentController = delegate?.viewForSegmentController()
-        segmentController.addTarget(self, action: #selector(changePage(_:)), for: .valueChanged)
+        segController.addTarget(self, action: #selector(changePage(_:)), for: .valueChanged)
     }
     
     @objc private func changePage(_ sender: UISegmentedControl) {
