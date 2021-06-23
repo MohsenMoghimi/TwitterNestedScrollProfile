@@ -78,6 +78,7 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
         guard let scrollViews = delegate?.scrollViewsForNestedScroll() else {return}
         scrollViews.forEach { (scroll) in
             scrollView.addObserverFor(scroll)
+        }
     }
 }
 
