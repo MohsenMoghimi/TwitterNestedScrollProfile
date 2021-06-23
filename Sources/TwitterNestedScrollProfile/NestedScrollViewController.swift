@@ -99,7 +99,7 @@ public protocol NestedScrollViewControllerDelegate {
 }
 
 extension UIPageViewController {
-    func setPage(currentPage: Int, _ toPage: Int, animated: Bool = false) {
+    func setPage(currentPage: Int, toPage: Int, animated: Bool = false) {
         var direction : UIPageViewController.NavigationDirection!
         guard currentPage != toPage,
               let vcList = viewControllers else {
