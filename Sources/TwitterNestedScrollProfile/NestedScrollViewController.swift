@@ -17,11 +17,7 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
             addObserverForScrollViews()
         }
     }
-    public var segmentController: UISegmentedControl! {
-        didSet {
-            segmentController.addTarget(self, action: #selector(changePage(_:)), for: .valueChanged)
-        }
-    }
+    public var segmentController: UISegmentedControl!
     private var currentPage = 0
     private var pagerViewController = PageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     
@@ -78,6 +74,7 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
         addHeaderViewController()
         addPagerViewController()
         segmentController = delegate?.viewForSegmentController()
+        segmentController.addTarget(self, action: #selector(changePage(_:)), for: .valueChanged)
     }
     
     private func addObserverForScrollViews() {
