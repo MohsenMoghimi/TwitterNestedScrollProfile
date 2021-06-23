@@ -17,7 +17,12 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
             addObserverForScrollViews()
         }
     }
-    
+    public var segmentController: UISegmentedControl! {
+        didSet {
+            segmentController.addTarget(self, action: #selector(changePage(_:)), for: .valueChanged)
+        }
+    }
+    private var currentPage = 0
     private var pagerViewController = PageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     
     public func setViewControllers(_ viewControllers: [UIViewController]) {
@@ -72,6 +77,7 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
         super.viewDidLoad()
         addHeaderViewController()
         addPagerViewController()
+        segmentController = delegate?.viewForSegmentController()
     }
     
     private func addObserverForScrollViews() {
@@ -80,8 +86,31 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
             scrollView.addObserverFor(scroll)
         }
     }
+    
+    @objc private func changePage(_ sender: UISegmentedControl) {
+        pagerViewController.setPage(currentPage: currentPage, to: sender.selectedSegmentIndex)
+        currentPage = sender.selectedSegmentIndex
+    }
 }
 
 public protocol NestedScrollViewControllerDelegate {
     func scrollViewsForNestedScroll() -> [UIScrollView]
+    func viewForSegmentController() -> UISegmentedControl?
+}
+
+extension UIPageViewController {
+    func setPage(currentPage: Int, _ to page: Int, animated: Bool = false) {
+        var direction : UIPageViewController.NavigationDirection!
+        guard currentPage != page else {
+            return
+        }
+        if currentPage < page {
+            direction = .forward
+        } else {
+            direction = .reverse
+        }
+        if vcList.indices.contains(page) {
+            self.setViewControllers([self.vcList[page]], direction: self.pageDirection(from: page), animated: animated, completion: nil)
+        }
+    }
 }
