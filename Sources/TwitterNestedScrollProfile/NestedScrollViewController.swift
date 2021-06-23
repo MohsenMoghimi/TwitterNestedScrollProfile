@@ -14,11 +14,10 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
     public var headerViewOffsetHeight: CGFloat = 50
     public var delegate : NestedScrollViewControllerDelegate? {
         didSet {
-            addObserverForViews()
+            addObserverForScrollViews()
         }
     }
-    public var segmentController: UISegmentedControl!
-    private var currentPage = 0
+    
     private var pagerViewController = PageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     
     public func setViewControllers(_ viewControllers: [UIViewController]) {
@@ -72,42 +71,17 @@ open class NestedScrollViewController: UIViewController, ScrollViewDelegate {
     open override func viewDidLoad() {
         super.viewDidLoad()
         addHeaderViewController()
-        addPagerViewController()    }
+        addPagerViewController()
+    }
     
-    private func addObserverForViews() {
-        guard let scrollViews = delegate?.scrollViewsForNestedScroll(),
-              let segController = delegate?.viewForSegmentController() else {return}
+    private func addObserverForScrollViews() {
+        guard let scrollViews = delegate?.scrollViewsForNestedScroll() else {return}
         scrollViews.forEach { (scroll) in
             scrollView.addObserverFor(scroll)
         }
-        segController.addTarget(self, action: #selector(changePage(_:)), for: .valueChanged)
-    }
-    
-    @objc private func changePage(_ sender: UISegmentedControl) {
-        pagerViewController.setPage(currentPage: currentPage, toPage: sender.selectedSegmentIndex)
-        currentPage = sender.selectedSegmentIndex
     }
 }
 
 public protocol NestedScrollViewControllerDelegate {
     func scrollViewsForNestedScroll() -> [UIScrollView]
-    func viewForSegmentController() -> UISegmentedControl?
-}
-
-extension UIPageViewController {
-    func setPage(currentPage: Int, toPage: Int, animated: Bool = false) {
-        var direction : UIPageViewController.NavigationDirection!
-        guard currentPage != toPage,
-              let vcList = viewControllers else {
-            return
-        }
-        if currentPage < toPage {
-            direction = .forward
-        } else {
-            direction = .reverse
-        }
-        if vcList.indices.contains(toPage) {
-            self.setViewControllers([vcList[toPage]], direction: direction, animated: animated, completion: nil)
-        }
-    }
 }
